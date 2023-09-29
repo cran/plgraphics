@@ -1,0 +1,105 @@
+## importFrom("base", as.POSIXct, as.POSIXlt, as.Date, julian)
+importFrom("stats",
+           ## S3 Generics for which we define methods:
+           add1, drop1, fitted, predict, residuals,
+           .checkMFClasses, .getXlevels, IQR,
+           aggregate, as.dist, ## for xdistResdiff
+           add.scope, as.formula,
+           binomial, coef, coefficients, contr.sum, contr.poly,
+           dcauchy, delete.response, deviance, df.residual,
+           dist, dlogis, dnorm, 
+           family, formula, glm.fit, hat, hatvalues, 
+           lm, lm.fit, lm.wfit, loess,
+           mad, mahalanobis, median, model.frame, model.matrix,
+           ## model.weights, model.extract, 
+           na.exclude, na.pass, 
+           nobs, pcauchy, pchisq, pf, plogis,
+           pnorm, ppoints, pt, pweibull, qchisq,
+           qlogis, qnorm, qqnorm, quantile, rbinom,
+           resid, rnorm, rpois, runif, sd, setNames,
+           terms,
+           model.response, napredict, naresid, qt,
+           update, update.formula, var)
+importFrom("utils", getS3method, head, recover, str, tail)
+importFrom("graphics", plot, abline, axis, axTicks, box, frame, legend,
+           lines, matlines, mtext, par, points, polygon, 
+           segments, symbols, text)
+importFrom("grDevices", col2rgb, dev.list, palette, rgb, colors)
+importFrom("chron", chron, dates, month.day.year, hours, minutes, seconds)
+##           S3method(axis, chron)
+
+importFrom("MASS", polr)
+## importFrom("nnet", multinom, nnet.default)
+importFrom("survival", coxph, survreg, Surv)
+
+importFrom("lme4", lmer) ## , family.merMod
+## importFrom("robustbase", lmrob)
+
+## importFrom("quantreg", rq)
+
+export(asinp, 
+       c.mon, c.months, c.weekdays, c.wkd, c.colors, 
+       charSize, colorpale, condquant,
+       clipat, 
+       deparseCond,
+       doc, "doc<-",
+       dropdata, dropNA, 
+       fitcomp, fitted.regrpolr, ## fitted.regr,
+       gensmooth, genvarattributes, gendate, gendateaxis, 
+       getvariables, getvarnames, getmeth, 
+       legendr, leverage, linear.predictors, linpred, logst, 
+       markextremes, modarg, 
+       nainf.exclude, "%nin%", #narestore, 
+       ## nobs.survreg, nobs.coxph,
+       notice, 
+       panelSmooth, pl.envir, default.ploptions, 
+       ploptions, plmarginpar, ## .ploptions, .plargs, 
+       plyx, plmatrix, plcond, plpanelCond, plmframes, plpanel, 
+       plmbox, plmboxes, plmboxes.formula, plmboxes.default,  
+       pl.control, pl.envir,
+       plinnerrange, pllimits, plcoord, plmark,
+       plframe, pltitle, plaxis, plticks, plpoints, pllines, plbars, 
+       plsmooth, plsmoothline, plrefline, plscale, plsubset, 
+       plregr, plregr.control, plot.xdistResscale,
+       plres2x, plresx, ## plfitpairs, 
+       prettyscale, predict.regrpolr, ## predict.regr, predict.mlm, 
+       drevgumbel, prevgumbel, qrevgumbel, rrevgumbel, ## qrevgumbelexp,
+       quantilew, quinterpol,
+       ## residuals.regr, 
+       replaceNA, residuals.polr, residuals.regrpolr,
+       residuals.regrcoxph, residuals.regrsurvreg,
+       robrange,
+       setvarattributes, showd, 
+       simresiduals, simresiduals.default, simresiduals.gam, simresiduals.glm, 
+       smoothRegr, smoothLm, smoothpar, smoothxtrim, stamp,
+       stdresiduals, sumNA, shortenstring, ## Surv, 
+       Tobit,
+       tit, "tit<-", transferAttributes, 
+       warn, weekday, 
+       xdistResdiff, xdistResscale, ymd, 
+       i.def, is.formula,
+       u.true, u.false, u.notfalse, u.debug, DB
+       )
+
+## S3method(plot, regr, plregr) ## only used in the regr package
+S3method(plot, xdistResscale)
+S3method(plmboxes, default)
+S3method(plmboxes, formula)
+S3method(simresiduals, default)
+S3method(simresiduals, gam)
+S3method(simresiduals, glm)
+
+##S3method(residuals, regr)
+##S3method(fitted, regr)
+##S3method(predict, regr)
+##S3method(predict, mlm)
+S3method(residuals, polr)
+S3method(fitted, regrpolr)
+S3method(predict, regrpolr)
+S3method(residuals, regrpolr)
+S3method(residuals, regrsurvreg)
+S3method(residuals, regrcoxph)
+##S3method(nobs, survreg)
+##S3method(nobs, coxph)
+
+## S3method(family, merMod)

@@ -1,0 +1,147 @@
+\name{plframe}
+\alias{plframe}
+\alias{pltitle}
+\alias{plaxis}
+
+\title{Low level plotting functions for the 'pl' system
+}
+\description{
+  These functions set up the frame of a plot
+  based on the 'pl' paradigm
+}
+\usage{
+plframe(x = NULL, y = NULL, xlab = NULL, ylab = NULL,
+  xlim = NULL, ylim = NULL, mar = NULL, showlabels = TRUE, 
+  plext = NULL, axcol = rep(1, 4), 
+  plargs = NULL, ploptions = NULL, marpar = NULL, xy = NULL, ...)
+
+pltitle(main=NULL, sub=NULL, csize=NULL, csizemin=NULL, 
+  side=3, line=NULL, adj=NULL, outer.margin=NULL, col="black",
+  doc=NULL, show=NA, plargs=NULL, ploptions = NULL, marpar = NULL, ...)
+
+plaxis(side, x=NULL, showlabels=TRUE, range=NULL, varlabel=NULL, col=1,
+  tickintervals=NULL,
+  plargs = NULL, ploptions = NULL, marpar = NULL, ...) 
+
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{x}{coordinates for the horizontal axis
+  }
+  \item{y}{coordinates for the vertical axis
+  }
+  \item{xlab, ylab}{axis labels}
+  \item{xlim, ylim}{plot ranges}
+  \item{mar}{plot margins}
+  \item{showlabels}{logical: should labels for tickmarks and the
+    variable label be displayed?
+    If \code{==1}, they are shown if there is enough space in the margin
+    (including outer margin), if \code{==2}, it is shown anyway
+    (by setting \code{xpd=TRUE}).}
+  \item{plext}{extension of the plotting area beyond the range of the
+    data. 
+  }
+  \item{axcol}{colors for drawing axes scales
+  }
+  
+  \item{main, sub}{main title and subtitle}
+  \item{varlabel}{variable name}
+  \item{side}{For \code{pltitle}: in which margin should the text
+    be shown?\cr
+    For \code{plaxis}: integer indicating which axis is to be drawn
+  }
+  \item{csize}{character size. May be vector of length 3, giving size for
+    main title, subtitle, and \code{tit} attribute of title,
+    respectively. The default is given by \code{ploptions("title.cex")}.
+  }
+  \item{csizemin}{minimal character size, to be used to adjust the
+    character size to the length of the text (if \code{cex} is \code{NULL})}
+  \item{line}{line in margin on which the main title is placed -- or the
+    subtitle if \code{main} is \code{NULL}}
+  \item{adj}{text adjustment, scalar between 0 and 1}
+  \item{outer.margin}{logical: should title text be placed in outer margin?}
+  \item{col}{color for the title text or axis line and tickmarks}
+  \item{range}{range in which tickmarks are set}
+  \item{doc}{logical: should the \code{tit} attribute of \code{main}
+    be displayed if available?}
+  \item{show}{logical: if \code{FALSE}, nothing will be done if
+    there are multiple frames and the current one is not the first.
+    If it is negative, no title will be shown, but the value will be
+    returned.
+  }
+  \item{tickintervals}{number of intervals used by
+    \code{\link{pretty}} to determine the axis ticks.
+  }
+  \item{plargs, ploptions}{result of \code{\link{pl.control}}, see Details
+  }
+  \item{marpar}{margin parameters, if already available.
+  By default, they will be retieved from \code{ploptions}.
+  }    
+  \item{xy}{logical: should the coordinates be obtained as in
+    high level graphics? This is set to \code{FALSE} to save time and
+    avoid complications, in case the user is sure that \code{x} and
+    \code{y} are vectors rather than formulas or variable names.
+  }
+  \item{\dots}{absorbs extra arguments}
+}
+\value{\code{plframe} and \code{plaxis} invisibly return the former
+  \code{par(c("cex", "mar", "mgp"))}
+  if \code{setpar} is \code{TRUE}, otherwise \code{NULL}.
+
+  \code{pltitle} invisibly return a list consisting of the \code{main}
+  and \code{sub} title.
+}
+\details{
+  If the arguments \code{x} and \code{y} are not given,
+  they are obtained from \code{pl.envir$pldata}.
+  
+  \code{plframe} draws axes according to argument \code{axes},
+  by calling \code{plaxis}.
+  It looks for attributes of \code{x} and \code{y}, such as
+  \code{innerrange} and \code{ticksat}.
+  Tick labels are shown at the values of the \code{ticklabelsat}
+  attribute if available, otherwise at the values of \code{ticksat}.
+  The labels can be given by the attribute \code{ticklabels}.
+  This facilitates setting more tick marks than labels, see the
+  example.\cr
+  It also draws a grid.
+  The positions of gridlines at \code{ticksat} by default.\cr
+  Finally, it draws "zero" lines as determined by the pl option
+  \code{zeroline}. The latter can be a numeric vector giving
+  the positions of such threshold lines, or a list of two such vectors,
+  the first for horizontal axis, the second for the vertical axis.
+
+  \code{plaxis} only shows the variable label, tick labels and tickmarks
+  if there is enough space or \code{showlabels > 1}.
+  If it is called when there are multiple panels, this is decided
+  according to the actual \code{mar} setting if it is an inner panel;
+  if it is a panel adjacent to an outer margin, then the \code{oma}
+  setting is also used.
+  
+  \code{plargs} and \code{ploptions} may be specified explicitly,
+  but they are usually generated by calling \code{pl.control}.
+}
+  
+\author{Werner A. Stahel
+}
+
+\seealso{\link{gendateaxis}; \link{pl.control}
+}
+\examples{
+plyx(Sepal.Width ~ Sepal.Length, data=iris)
+
+## again, each step separately
+t.dt <- pl.envir$pldata
+oldpar <- plframe() ## or plframe(t.dt$Sepal.Length, t.dt$Sepal.Width, plargs=pl.envir)
+plsmooth() ## or plsmooth(t.dt$Sepal.Length, t.dt$Sepal.Width, plargs=pl.envir)
+t.plab <- plmark(markextremes=0.03)
+  ## or plmark(t.dt$Sepal.Length, t.dt$Sepal.Width, markextremes=0.03, plargs=pl.envir)
+plpoints(plab=t.plab) ## or plpoints(t.dt$Sepal.Length, t.dt$Sepal.Width,
+                      ##      plargs=pl.envir, plab=t.plab)
+plaxis(4)
+
+par(oldpar)   ## reset the changed graphical parameters
+}
+
+\keyword{aplot}
+
